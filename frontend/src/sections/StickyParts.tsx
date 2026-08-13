@@ -70,7 +70,7 @@ export default function StickyParts() {
       id="build"
       ref={ref}
       className="relative border-b-[3px] border-black"
-      style={{ height: `${PARTS.length * 100}vh` }}
+      style={{ height: `${PARTS.length * 78}vh` }}
     >
       <div className="stripes-tight sticky top-0 flex h-screen flex-col overflow-hidden">
         {/* progress rail */}

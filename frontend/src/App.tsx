@@ -3,6 +3,7 @@ import CountUp from './bits/CountUp'
 import ClickSpark from './bits/ClickSpark'
 import AnimatedContent from './bits/AnimatedContent'
 import StickyParts from './sections/StickyParts'
+import HeroIntro from './sections/HeroIntro'
 
 const REPO = 'https://github.com/emirykl/Molex402'
 const BEAVER = 'https://github.com/emirykl/Beaver402'
@@ -22,7 +23,18 @@ function Head({ kicker, title, lede }: { kicker: string; title: string; lede?: s
       <div className="box inline-block bg-acid px-3 py-1.5">
         <span className="font-mono text-[12px] font-bold tracking-[0.14em] uppercase">{kicker}</span>
       </div>
-      <h2 className="tight mt-5 max-w-[16ch] text-[38px] sm:text-[58px]">{title}</h2>
+      <SplitText
+        tag="h2"
+        text={title}
+        className="tight mt-5 block max-w-[16ch] text-[38px] sm:text-[58px]"
+        splitType="words"
+        delay={32}
+        duration={0.55}
+        ease="power4.out"
+        from={{ opacity: 0, y: 28 }}
+        to={{ opacity: 1, y: 0 }}
+        threshold={0.15}
+      />
       {lede && (
         <p className="mt-6 max-w-[56ch] text-[16.5px] leading-relaxed text-black/70">{lede}</p>
       )}
@@ -66,89 +78,7 @@ export default function App() {
   return (
     <ClickSpark sparkColor="#000000" sparkSize={13} sparkRadius={22} sparkCount={8} duration={380}>
       <div className="min-h-screen">
-        {/* ============================================== hero */}
-        <header className="relative min-h-[92vh] overflow-hidden">
-          <div className="stripes absolute inset-0" />
-
-          {/* oversized cropped wordmark */}
-          <div className="pointer-events-none absolute inset-0 flex items-center">
-            <span className="giant -ml-[6vw] text-[30vw] text-black opacity-95">MOLEX</span>
-          </div>
-
-          {/* top bar */}
-          <div className="relative flex flex-wrap items-start justify-between gap-3 p-4 sm:p-6">
-            <div className="flex flex-wrap gap-3">
-              {[
-                ['WHY', '#gap'],
-                ['WHAT', '#build'],
-                ['HOW', '#how'],
-                ['PROOF', '#proof'],
-              ].map(([label, href]) => (
-                <a
-                  key={label}
-                  href={href}
-                  className="box shove bg-white px-5 py-3 font-display text-[15px] hover:bg-acid sm:px-7 sm:text-[18px]"
-                >
-                  {label}
-                </a>
-              ))}
-            </div>
-            <a
-              href={REPO}
-              className="box shove grid h-14 w-14 place-items-center rounded-full bg-white font-display text-[13px] hover:bg-acid"
-            >
-              GH
-            </a>
-          </div>
-
-          {/* stacked content boxes */}
-          <div className="relative mx-auto mt-[6vh] max-w-6xl px-4 pb-24 sm:px-6">
-            <div className="box max-w-[760px] bg-acid p-6 sm:p-9">
-              <SplitText
-                tag="h1"
-                text="Agents find it. Pay for it. Prove they got it."
-                className="tight block text-[34px] sm:text-[58px]"
-                splitType="words"
-                delay={40}
-                duration={0.6}
-                ease="power4.out"
-                from={{ opacity: 0, y: 34 }}
-                to={{ opacity: 1, y: 0 }}
-                threshold={0.05}
-              />
-            </div>
-
-            <div className="box -mt-[3px] max-w-[600px] bg-white p-6 sm:ml-16 sm:p-8">
-              <p className="text-[16px] leading-relaxed sm:text-[17.5px]">
-                Molex402 is an open source x402 facilitator and Bazaar for Stellar. Services list
-                themselves when they get paid. Agents search in plain language, pay in USDC, and
-                check what came back against what they paid for.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <a
-                  href={REPO}
-                  className="box shove bg-black px-6 py-3 font-display text-[15px] text-white"
-                >
-                  READ THE CODE
-                </a>
-                <a
-                  href="#proof"
-                  className="box shove bg-acid px-6 py-3 font-display text-[15px]"
-                >
-                  SEE THE PROOF
-                </a>
-              </div>
-            </div>
-
-            <div className="box -mt-[3px] inline-block bg-black px-6 py-4 sm:ml-40">
-              <p className="font-display text-[15px] leading-tight text-white sm:text-[19px]">
-                SCF #45 · RFP TRACK
-                <br />
-                <span className="text-acid">TESTNET + PUBNET · APACHE 2.0</span>
-              </p>
-            </div>
-          </div>
-        </header>
+        <HeroIntro />
 
         {/* ============================================== the gap */}
         <section id="gap" className="border-y-[3px] border-black bg-white px-4 py-20 sm:px-6 sm:py-28">
