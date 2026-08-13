@@ -97,7 +97,7 @@ export default function StickyParts() {
         </div>
 
         {/* stage */}
-        <div className="relative flex flex-1 items-center overflow-x-hidden overflow-y-auto py-5 sm:py-8">
+        <div className="relative flex flex-1 items-center overflow-hidden py-5 sm:py-8">
           {/* the number, oversized behind everything */}
           <AnimatePresence mode="popLayout">
             <motion.span
@@ -106,16 +106,16 @@ export default function StickyParts() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -80 }}
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="giant pointer-events-none absolute -right-[3vw] bottom-[-5vw] text-[30vw] text-black/10 sm:text-[34vw] sm:text-black/12"
+              className="giant pointer-events-none absolute right-[-4vw] bottom-[-8vh] text-[38vw] text-black/10 sm:text-[42vw]"
             >
               {part.n}
             </motion.span>
           </AnimatePresence>
 
           <div className="relative mx-auto w-full max-w-6xl px-4 sm:px-6">
-            <div className="grid items-start gap-6 md:grid-cols-[minmax(0,260px)_minmax(0,1fr)] lg:grid-cols-[minmax(0,300px)_minmax(0,1fr)]">
+            <div className="grid min-h-[min(540px,58vh)] items-stretch gap-6 md:grid-cols-[minmax(0,270px)_minmax(0,1fr)] lg:grid-cols-[minmax(0,310px)_minmax(0,1fr)]">
               {/* index list */}
-              <div className="box hidden self-start bg-white md:block">
+              <div className="box hidden bg-white md:flex md:flex-col">
                 {PARTS.map((p, i) => (
                   <button
                     key={p.n}
@@ -130,7 +130,7 @@ export default function StickyParts() {
                         behavior: 'smooth',
                       })
                     }}
-                    className={`flex w-full items-center gap-3 border-b-2 border-black px-4 py-3 text-left transition-colors last:border-b-0 ${
+                    className={`flex w-full flex-1 items-center gap-3 border-b-2 border-black px-4 py-3 text-left transition-colors last:border-b-0 ${
                       i === active ? 'bg-black text-acid' : 'bg-white hover:bg-acid'
                     }`}
                   >
@@ -154,19 +154,19 @@ export default function StickyParts() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -40 }}
                   transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
-                  className="box bg-white p-5 sm:p-8"
+                  className="box flex flex-col justify-center bg-white p-5 sm:p-9"
                 >
-                  <div className="box-thin mb-4 inline-block bg-acid px-2.5 py-1 sm:mb-5">
+                  <div className="box-thin mb-4 self-start bg-acid px-2.5 py-1 sm:mb-5">
                     <span className="font-mono text-[12px] font-bold">PART {part.n}</span>
                   </div>
 
                   <h2 className="tight text-[30px] sm:text-[48px] lg:text-[58px]">{part.name}</h2>
 
-                  <p className="mt-4 max-w-[54ch] text-[14.5px] leading-relaxed text-black/72 sm:mt-5 sm:text-[16.5px]">
+                  <p className="mt-4 max-w-[56ch] text-[15px] leading-relaxed text-black/72 sm:mt-5 sm:text-[17.5px]">
                     {part.body}
                   </p>
 
-                  <div className="mt-5 flex flex-wrap gap-2 sm:mt-6 sm:gap-2.5">
+                  <div className="mt-6 flex flex-wrap gap-2 sm:mt-7 sm:gap-2.5">
                     {part.bullets.map((b, i) => (
                       <motion.span
                         key={b}
