@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Molex402 — Secure x402 from payment to delivery on Stellar</title>
+<meta name="description" content="Open-source x402 facilitator and Proof-Carrying Bazaar for Stellar. AI agents discover, price, pay for and verify paid HTTP and MCP services — with every settled payment bound to exactly one verified service effect.">
+<meta property="og:title" content="Molex402 — Secure x402 from payment to delivery on Stellar">
+<meta property="og:description" content="Open-source x402 facilitator and Proof-Carrying Bazaar for Stellar.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦫</text></svg>">
+<style>
+  :root{
+    --bg:#0b0714; --bg-2:#120b22; --panel:rgba(255,255,255,.038);
+    --panel-line:rgba(255,255,255,.10);
+    --ink:#efeaf8; --ink-dim:#b6acd0; --ink-faint:#8b81a8;
+    --accent:#a78bfa; --accent-2:#c4b5fd; --accent-deep:#7c3aed;
+    --ok:#4ade80; --warn:#fbbf24;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+    --maxw:1080px;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#faf8ff; --bg-2:#f2edff; --panel:rgba(20,10,40,.035);
+      --panel-line:rgba(20,10,40,.12);
+      --ink:#1a1030; --ink-dim:#4d4168; --ink-faint:#6f6490;
+      --accent:#6d28d9; --accent-2:#7c3aed; --accent-deep:#5b21b6;
+      --ok:#15803d; --warn:#b45309;
+    }
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--sans); font-size:17px; line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent-2); text-decoration:none; border-bottom:1px solid rgba(167,139,250,.35)}
+  a:hover{border-bottom-color:var(--accent-2)}
+  code,.mono{font-family:var(--mono); font-size:.88em}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative; overflow:hidden;
+    background:
+      radial-gradient(900px 420px at 78% -8%, rgba(124,58,237,.42), transparent 62%),
+      radial-gradient(700px 380px at 8% 8%, rgba(79,70,229,.28), transparent 60%),
+      linear-gradient(170deg, var(--bg-2), var(--bg));
+    border-bottom:1px solid var(--panel-line);
+  }
+  .hero .wrap{padding-top:76px; padding-bottom:66px}
+  .eyebrow{
+    font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent-2); font-weight:650; margin:0 0 26px;
+  }
+  h1{
+    font-size:clamp(34px,5.4vw,58px); line-height:1.08; letter-spacing:-.022em;
+    margin:0 0 22px; font-weight:750; max-width:16ch;
+  }
+  .lede{font-size:clamp(17px,2.1vw,20.5px); color:var(--ink-dim); max-width:62ch; margin:0 0 30px}
+  .chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 34px; padding:0; list-style:none}
+  .chips li{
+    font-size:12.5px; font-family:var(--mono); color:var(--accent-2);
+    border:1px solid rgba(167,139,250,.34); background:rgba(124,58,237,.13);
+    padding:5px 11px; border-radius:999px; white-space:nowrap;
+  }
+  .cta{display:flex; flex-wrap:wrap; gap:12px}
+  .btn{
+    display:inline-block; padding:12px 22px; border-radius:10px; font-weight:620;
+    font-size:15px; border:1px solid transparent; transition:.15s;
+  }
+  .btn-primary{background:var(--accent-deep); color:#fff; border-bottom:1px solid var(--accent-deep)}
+  .btn-primary:hover{background:#6d28d9; border-bottom-color:#6d28d9}
+  .btn-ghost{border-color:var(--panel-line); color:var(--ink); border-bottom:1px solid var(--panel-line)}
+  .btn-ghost:hover{border-color:var(--accent); border-bottom-color:var(--accent)}
+
+  /* ---------- generic sections ---------- */
+  section{padding:70px 0; border-bottom:1px solid var(--panel-line)}
+  h2{
+    font-size:clamp(23px,3vw,31px); letter-spacing:-.016em; margin:0 0 14px; font-weight:700;
+  }
+  h2 .num{color:var(--accent); font-family:var(--mono); font-size:.62em; margin-right:12px; font-weight:600}
+  .sub{color:var(--ink-dim); max-width:64ch; margin:0 0 34px}
+  h3{font-size:16.5px; margin:0 0 8px; font-weight:650; letter-spacing:-.005em}
+
+  .grid{display:grid; gap:16px}
+  .g2{grid-template-columns:repeat(auto-fit,minmax(290px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(232px,1fr))}
+  .card{
+    background:var(--panel); border:1px solid var(--panel-line);
+    border-radius:13px; padding:22px;
+  }
+  .card p{margin:0; color:var(--ink-dim); font-size:14.6px; line-height:1.6}
+  .card .tag{
+    display:inline-block; font-family:var(--mono); font-size:10.5px; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--accent); margin-bottom:11px; font-weight:650;
+  }
+
+  /* ---------- gap callout ---------- */
+  .gap{
+    background:var(--panel); border:1px solid var(--panel-line);
+    border-left:3px solid var(--accent); border-radius:0 12px 12px 0;
+    padding:22px 26px; margin:0 0 32px;
+  }
+  .gap p{margin:0; color:var(--ink-dim)}
+  .gap strong{color:var(--ink)}
+
+  /* ---------- flow ---------- */
+  .flow{
+    display:flex; flex-wrap:wrap; gap:8px; align-items:stretch;
+    margin-top:26px; padding:0; list-style:none;
+  }
+  .flow li{
+    flex:1 1 118px; background:var(--panel); border:1px solid var(--panel-line);
+    border-radius:10px; padding:13px 14px;
+  }
+  .flow .n{font-family:var(--mono); font-size:10.5px; color:var(--accent); display:block; margin-bottom:5px}
+  .flow .t{font-size:13.5px; font-weight:620; display:block; line-height:1.35}
+  .flow .d{font-size:11.8px; color:var(--ink-faint); display:block; margin-top:3px; line-height:1.4}
+
+  /* ---------- evidence table ---------- */
+  .tablewrap{overflow-x:auto; -webkit-overflow-scrolling:touch}
+  table{border-collapse:collapse; width:100%; min-width:520px; font-size:14.5px}
+  th,td{text-align:left; padding:12px 14px; border-bottom:1px solid var(--panel-line); vertical-align:top}
+  th{
+    font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--ink-faint); font-weight:650;
+  }
+  td{color:var(--ink-dim)}
+  td strong{color:var(--ink); font-weight:620}
+  tr:last-child td{border-bottom:none}
+
+  .metrics{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:14px; margin-top:8px}
+  .metric{background:var(--panel); border:1px solid var(--panel-line); border-radius:12px; padding:18px 20px}
+  .metric .v{font-size:27px; font-weight:720; letter-spacing:-.02em; line-height:1.15; display:block}
+  .metric .k{font-size:12.5px; color:var(--ink-faint); margin-top:5px; display:block; line-height:1.4}
+
+  .status{display:inline-flex; align-items:center; gap:7px; font-size:13px; color:var(--ink-dim)}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--ok); flex:none}
+  .dot.warn{background:var(--warn)}
+
+  footer{padding:44px 0 60px; color:var(--ink-faint); font-size:13.5px}
+  footer p{margin:0 0 7px}
+  .foot-links{display:flex; flex-wrap:wrap; gap:18px; margin-top:16px}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Stellar Community Fund #45 · RFP Track · x402 Facilitator with Bazaar discovery support</p>
+    <h1>Secure x402, from payment to delivery.</h1>
+    <p class="lede">
+      Molex402 is an open-source x402 facilitator and <strong>Proof-Carrying Bazaar</strong> for Stellar.
+      It lets AI agents discover, price and pay for HTTP and MCP services in USDC — and binds every
+      settled payment to exactly one verified service effect.
+    </p>
+    <ul class="chips">
+      <li>x402 v2</li>
+      <li>exact + upto</li>
+      <li>stellar:testnet + pubnet</li>
+      <li>Bazaar HTTP + MCP</li>
+      <li>Apache-2.0</li>
+    </ul>
+    <div class="cta">
+      <a class="btn btn-primary" href="https://github.com/emirykl/Molex402">View the code</a>
+      <a class="btn btn-ghost" href="#evidence">See the evidence</a>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <h2><span class="num">01</span>The gap</h2>
+    <div class="gap">
+      <p>
+        Stellar already has working x402 <strong>settlement</strong> — the Apache-2.0
+        <code>@x402/stellar</code> package and a live facilitator both exist.
+        What Stellar does not have is a <strong>Bazaar</strong>: a native discovery layer where an agent
+        with no prior integration can find a paid service, understand its price, and pay for it.
+        Stellar's own "Built on Stellar" directory currently lists <strong>zero</strong> discovery projects.
+      </p>
+    </div>
+    <p class="sub">
+      Molex402 fills that gap, and adds the piece every catalog leaves out: proof that the service you
+      paid for is the service you actually received.
+    </p>
+    <div class="grid g3">
+      <div class="card">
+        <span class="tag">Discovery</span>
+        <h3>Agents can't find Stellar services</h3>
+        <p>Paid endpoints stay invisible. Without a catalog, every integration is hand-wired in advance — which defeats the point of an autonomous agent.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Trust</span>
+        <h3>A listing is just a claim</h3>
+        <p>Catalogs rank on self-reported metadata. An agent choosing a service on price alone has no signal about how that endpoint actually behaves under attack.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Delivery</span>
+        <h3>Settlement isn't delivery</h3>
+        <p>x402 proves money moved. It does not prove the paid work ran once, ran at all, or ran for that specific request. Retries and races can pay twice or deliver twice.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="num">02</span>What we're building</h2>
+    <p class="sub">
+      Five components, shipped open source under Apache-2.0, built on <code>@x402/stellar</code>
+      rather than reimplementing verify and settle.
+    </p>
+    <div class="grid g2">
+      <div class="card">
+        <span class="tag">Core</span>
+        <h3>Proof-Carrying Bazaar</h3>
+        <p>Automatic cataloging from settled payments. <code>/discovery/resources</code> and <code>/discovery/search</code> over HTTP endpoints and MCP tools as first-class resource types, with natural-language search, structured filters and cursor pagination. Every listing carries a versioned security profile — last tested, which checks passed, and a link to the evidence.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Core</span>
+        <h3>Facilitator</h3>
+        <p><code>/supported</code>, <code>/verify</code> and <code>/settle</code> on both testnet and pubnet, for the <code>exact</code> and <code>upto</code> schemes. Non-custodial, with fee sponsorship so agents never need XLM. Hosted, self-hosted and embedded library deployment modes.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Differentiator</span>
+        <h3>MolexGuard</h3>
+        <p>A framework-agnostic middleware for sellers. It holds the paid handler behind settlement finality and a durable state machine, so one payment produces at most one committed service effect — even under 1,000 concurrent replays of the same payment header.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Differentiator</span>
+        <h3>MolexScope</h3>
+        <p>A black-box attack suite that tests facilitators and resource servers from the outside: replay, header and cache confusion, verify/settle races, fee abuse and catalog poisoning. It turns "secure" from a claim in a document into a reproducible, signed test artifact.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Interface</span>
+        <h3>Agent-facing MCP server</h3>
+        <p>Search → inspect → pay → verify, split into deterministic tools an agent runtime can call. No tool ever asks for a private key; signing stays with the buyer's wallet.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Upstream</span>
+        <h3><code>upto</code> scheme for Stellar</h3>
+        <p>A minimal, immutable Soroban settlement contract with no admin, no upgrade path and no custody — plus the spec and implementation contributed upstream to x402 and coordinated with the TSC.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="num">03</span>How a paid request works</h2>
+    <p class="sub">
+      The agent never has to trust the listing. It checks the security profile before paying, and
+      verifies the delivered response against the payment afterwards.
+    </p>
+    <ol class="flow">
+      <li><span class="n">01</span><span class="t">Discover</span><span class="d">Search the Bazaar, filter on security profile</span></li>
+      <li><span class="n">02</span><span class="t">Bind</span><span class="d">Signed offer + request fingerprint</span></li>
+      <li><span class="n">03</span><span class="t">Reserve</span><span class="d">Pessimistic lock on the payment</span></li>
+      <li><span class="n">04</span><span class="t">Verify</span><span class="d">Auth entry against requirements</span></li>
+      <li><span class="n">05</span><span class="t">Settle</span><span class="d">Stellar finality, fees sponsored</span></li>
+      <li><span class="n">06</span><span class="t">Execute</span><span class="d">Exactly one committed effect</span></li>
+      <li><span class="n">07</span><span class="t">Prove</span><span class="d">Signed integrity evidence</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="evidence">
+  <div class="wrap">
+    <h2><span class="num">04</span>Track record</h2>
+    <p class="sub">
+      We build x402 payment infrastructure on Stellar and we ship it with on-chain evidence.
+      Our previous project, <strong>Beaver402</strong>, won a $5,000 Stellar Instawards grant.
+    </p>
+
+    <div class="metrics">
+      <div class="metric"><span class="v">$5,000</span><span class="k">Stellar Instawards grant, awarded to Beaver402</span></div>
+      <div class="metric"><span class="v">142</span><span class="k">Commits on a deployed, evidenced codebase</span></div>
+      <div class="metric"><span class="v">151</span><span class="k">Contract + backend tests passing</span></div>
+      <div class="metric"><span class="v">3</span><span class="k">Verifiable testnet transactions on chain</span></div>
+    </div>
+
+    <p class="sub" style="margin-top:34px">
+      Beaver402 is a two-party proof-of-intent system for agent payments over Stellar x402: a merchant
+      signs a challenge describing the paid request, the buyer independently reconstructs it, and a
+      Soroban smart account authorizes settlement only when every security-critical field agrees.
+      It covers exactly the ground this RFP asks for — payment infrastructure, an MCP server, and a
+      deployed Soroban contract.
+    </p>
+
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>What</th><th>Evidence</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Source</strong><br>Rust + TypeScript, threat model, canonical encoding spec, test vectors</td>
+            <td><a href="https://github.com/emirykl/Beaver402">github.com/emirykl/Beaver402</a></td>
+          </tr>
+          <tr>
+            <td><strong>Deployed Soroban contract</strong><br>Smart account enforcing two-party authorization</td>
+            <td><a href="https://stellar.expert/explorer/testnet/contract/CBPE37HQ6CHIKB7F3OFU2BIDAQOLB3QZD2DAO5Y6F6DKUSHLW2JZTX2S" class="mono">CBPE37HQ…JZTX2S</a></td>
+          </tr>
+          <tr>
+            <td><strong>A payment both parties agreed on</strong></td>
+            <td><a href="https://stellar.expert/explorer/testnet/tx/19d9c4e4f519e4ab9971c394a6338d9a82b83287f3e90d648ef3e15c49a1219a" class="mono">19d9c4e4…</a></td>
+          </tr>
+          <tr>
+            <td><strong>An owner action authorized by passkey</strong></td>
+            <td><a href="https://stellar.expert/explorer/testnet/tx/61e6485c8ef7df96b92ada8c79687acc69d8ea1b5d307d952d9b9efcab259b48" class="mono">61e6485c…</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2><span class="num">05</span>Status</h2>
+    <p class="sub">
+      Molex402 is an active SCF #45 RFP submission. This page tracks what is live and what is in progress —
+      every claim links to something you can check.
+    </p>
+    <div class="grid g2">
+      <div class="card">
+        <h3><span class="status"><span class="dot warn"></span>In progress</span></h3>
+        <p style="margin-top:10px">Bazaar discovery API, facilitator <code>/supported</code> · <code>/verify</code> · <code>/settle</code> on testnet, MolexGuard single-execution middleware, agent-facing MCP server.</p>
+      </div>
+      <div class="card">
+        <h3><span class="status"><span class="dot"></span>Proven already</span></h3>
+        <p style="margin-top:10px">x402 payment flow on Stellar, Soroban contract design and deployment, MCP server for agent runtimes, on-chain evidence discipline — all shipped in Beaver402.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p><strong style="color:var(--ink)">Molex402</strong> — open-source x402 facilitator and Proof-Carrying Bazaar for Stellar.</p>
+    <p>Submitted to the Stellar Community Fund #45 RFP Track. Licensed Apache-2.0.</p>
+    <div class="foot-links">
+      <a href="https://github.com/emirykl/Molex402">Molex402 on GitHub</a>
+      <a href="https://github.com/emirykl/Beaver402">Beaver402 on GitHub</a>
+      <a href="https://stellar.gitbook.io/scf-handbook/scf-awards/build-award/rfp-track">The RFP</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

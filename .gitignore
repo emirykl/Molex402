@@ -1,0 +1,15 @@
+node_modules/
+dist/
+build/
+target/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+coverage/
+.turbo/
+
+# Internal planning document — contains budget breakdown, competitor analysis
+# and self-assessment. Not for public distribution.
+molex402_allinfo.pdf
