@@ -28,6 +28,9 @@ export default function HeroIntro() {
   const moleScale = useTransform(scrollYProgress, [0.34, 0.92], [0.86, 1])
   // the bar underneath arrives just before the mole breaks ground
   const barY = useTransform(scrollYProgress, [0.3, 0.44], ['110%', '0%'])
+  // the one line summary lands alongside the mole
+  const blurbOpacity = useTransform(scrollYProgress, [0.46, 0.6], [0, 1])
+  const blurbY = useTransform(scrollYProgress, [0.46, 0.66], ['30%', '0%'])
 
   return (
     <section ref={ref} className="track-hero relative">
@@ -66,6 +69,22 @@ export default function HeroIntro() {
             <span className="giant block px-[2vw] text-center text-[16.5vw] text-black">
               MOLEX402
             </span>
+          </motion.div>
+
+          {/* one line summary, sitting to the left of the mole */}
+          <motion.div
+            style={{ opacity: blurbOpacity, y: blurbY, willChange: 'transform, opacity' }}
+            className="absolute bottom-[5vh] left-[4vw] z-20 hidden max-w-[400px] sm:block lg:max-w-[460px]"
+          >
+            <div className="box bg-white p-5 lg:p-6">
+              <span className="font-mono text-[11.5px] font-bold tracking-[0.16em]">
+                WHAT IS MOLEX402
+              </span>
+              <p className="mt-3 text-[16px] leading-snug font-semibold lg:text-[18px]">
+                An open source x402 facilitator and Bazaar for Stellar. Agents discover paid
+                services, pay in USDC, and prove they got what they paid for.
+              </p>
+            </div>
           </motion.div>
 
           {/* the mole comes up out of the ground */}
