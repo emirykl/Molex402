@@ -88,7 +88,6 @@ export default function HeroIntro() {
   // 3. cards fly in one after another, then everything holds until release
   const rowOpacity = useTransform(scrollYProgress, [0.56, 0.68], [0, 1])
   const rowY = useTransform(scrollYProgress, [0.56, 0.72], ['26vh', '0vh'])
-  const hintOpacity = useTransform(scrollYProgress, [0, 0.08], [1, 0])
 
   return (
     <section ref={ref} className="relative h-[240vh]">
@@ -158,15 +157,6 @@ export default function HeroIntro() {
           </div>
         </div>
 
-        {/* scroll hint, gone the moment you move */}
-        <motion.div
-          style={{ opacity: hintOpacity }}
-          className="pointer-events-none absolute inset-x-0 bottom-6 z-10 flex justify-center"
-        >
-          <div className="box bg-white px-4 py-2">
-            <span className="font-mono text-[11.5px] font-bold">SCROLL ↓</span>
-          </div>
-        </motion.div>
       </div>
     </section>
   )
