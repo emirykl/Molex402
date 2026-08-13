@@ -10,6 +10,7 @@ target/
 coverage/
 .turbo/
 
-# Internal planning document — contains budget breakdown, competitor analysis
-# and self-assessment. Not for public distribution.
-molex402_allinfo.pdf
+# Internal planning documents: budget breakdown, competitor analysis and a
+# self assessment. These must never reach the public repo or a deployment.
+*allinfo*.pdf
+*_allinfo.*
