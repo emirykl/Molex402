@@ -56,12 +56,20 @@ export default function StickyParts() {
     offset: ['start start', 'end end'],
   })
 
-  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+  // Hold at both ends of the track. The lead in lets the stage finish pinning
+  // to the full viewport before part 01 gives way, and the lead out lets part
+  // 06 sit still before the section scrolls off, so no step ever lands while
+  // the panel is only half on screen.
+  const LEAD_IN = 0.12
+  const LEAD_OUT = 0.94
+  const stepped = useTransform(scrollYProgress, [LEAD_IN, LEAD_OUT], [0, 1], { clamp: true })
+
+  useMotionValueEvent(stepped, 'change', (v) => {
     const i = Math.min(PARTS.length - 1, Math.max(0, Math.floor(v * PARTS.length)))
     setActive(i)
   })
 
-  const barWidth = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
+  const barWidth = useTransform(stepped, [0, 1], ['0%', '100%'])
 
   const part = PARTS[active]
 
@@ -114,9 +122,11 @@ export default function StickyParts() {
                     onClick={() => {
                       const el = ref.current
                       if (!el) return
-                      const step = el.offsetHeight / PARTS.length
+                      // invert the lead in / lead out mapping to land mid step
+                      const target = LEAD_IN + (LEAD_OUT - LEAD_IN) * ((i + 0.5) / PARTS.length)
+                      const travel = el.offsetHeight - window.innerHeight
                       window.scrollTo({
-                        top: el.offsetTop + (i + 0.5) * step,
+                        top: el.offsetTop + target * travel,
                         behavior: 'smooth',
                       })
                     }}
