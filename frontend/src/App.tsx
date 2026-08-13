@@ -2,6 +2,7 @@ import SplitText from './bits/SplitText'
 import CountUp from './bits/CountUp'
 import ClickSpark from './bits/ClickSpark'
 import AnimatedContent from './bits/AnimatedContent'
+import StickyParts from './sections/StickyParts'
 
 const REPO = 'https://github.com/emirykl/Molex402'
 const BEAVER = 'https://github.com/emirykl/Beaver402'
@@ -180,57 +181,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* ============================================== what we build */}
-        <section id="build" className="stripes-tight border-b-[3px] border-black px-4 py-20 sm:px-6 sm:py-28">
-          <div className="mx-auto max-w-6xl">
-            <div className="box bg-white p-6 sm:p-10">
-              <Head
-                kicker="The build"
-                title="Six parts. One job."
-                lede="Built on the @x402/stellar package rather than rewriting verify and settle, which is what the RFP asks for."
-              />
-            </div>
-            <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              <Panel
-                n="01"
-                fill
-                title="Bazaar"
-                body="Services get listed the moment a payment settles, with no extra registration step. Search in plain language across HTTP endpoints and MCP tools. Filter on price, network and security profile."
-              />
-              <Panel
-                n="02"
-                delay={0.06}
-                title="Facilitator"
-                body="Verify and settle on testnet and pubnet, for both exact and upto. Fees are sponsored, so an agent never has to hold XLM. Run it hosted, self hosted, or as a library in your own server."
-              />
-              <Panel
-                n="03"
-                delay={0.12}
-                title="MolexGuard"
-                body="Middleware for the seller. It keeps the paid handler locked until settlement is final, then lets it run exactly once. A thousand parallel retries of one payment still buy one delivery."
-              />
-              <Panel
-                n="04"
-                delay={0.18}
-                title="MolexScope"
-                body="An attack suite that tests a service from the outside. Replay, cache tricks, verify and settle races, fee abuse, poisoned listings. Results get signed and attached to the listing."
-              />
-              <Panel
-                n="05"
-                delay={0.24}
-                fill
-                title="MCP server"
-                body="Search, inspect, pay, verify. Four steps an agent runtime can call directly. No tool ever asks for a private key, so signing stays in the buyer wallet."
-              />
-              <Panel
-                n="06"
-                delay={0.3}
-                title="Upto on Stellar"
-                body="A small Soroban contract for capped payments, with no admin, no upgrade path and no custody. The spec and the code go upstream to x402 rather than staying ours."
-              />
-            </div>
-          </div>
-        </section>
+        <StickyParts />
 
         {/* ============================================== how */}
         <section id="how" className="border-b-[3px] border-black bg-white px-4 py-20 sm:px-6 sm:py-28">
