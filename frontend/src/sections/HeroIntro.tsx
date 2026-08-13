@@ -20,7 +20,7 @@ export default function HeroIntro() {
   })
 
   // 1. the wordmark grows until it fills the screen
-  const markScale = useTransform(scrollYProgress, [0, 0.34], [0.3, 1])
+  const markScale = useTransform(scrollYProgress, [0, 0.34], [0.78, 1])
   // 2. it steps up to open the ground underneath
   const markY = useTransform(scrollYProgress, [0.36, 0.56], ['0vh', '-14vh'])
   // 3. the mole digs its way up, slowly, over the rest of the track
