@@ -1,5 +1,5 @@
-import { useRef, useState } from 'react'
-import { motion, useScroll, useTransform, useMotionValueEvent } from 'motion/react'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'motion/react'
 import mole from '../assets/molex402-mole.webp'
 
 const REPO = 'https://github.com/emirykl/Molex402'
@@ -28,12 +28,10 @@ export default function HeroIntro() {
   const moleScale = useTransform(scrollYProgress, [0.34, 0.92], [0.86, 1])
   // the bar underneath arrives just before the mole breaks ground
   const barY = useTransform(scrollYProgress, [0.3, 0.44], ['110%', '0%'])
-  // The summary is latched rather than scroll linked. It surfaces with the
-  // mole and then stays put, instead of fading back out on the way past.
-  const [summaryOut, setSummaryOut] = useState(false)
-  useMotionValueEvent(scrollYProgress, 'change', (v) => {
-    if (v >= 0.52) setSummaryOut(true)
-  })
+  // The summary is driven by the mole's transforms, so the two rise, sit and
+  // retreat as one. No fade of its own; the stage clips it below the ground.
+  const summaryY = useTransform(scrollYProgress, [0.34, 0.92], ['82vh', '0vh'])
+  const summaryScale = moleScale
 
   return (
     <section ref={ref} className="track-hero relative">
@@ -74,13 +72,10 @@ export default function HeroIntro() {
             </span>
           </motion.div>
 
-          {/* summary, surfacing next to the mole and staying there */}
+          {/* summary, surfacing and retreating in step with the mole */}
           <motion.div
-            initial={false}
-            animate={summaryOut ? { opacity: 1, y: 0 } : { opacity: 0, y: 34 }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            style={{ willChange: 'transform, opacity' }}
-            className="absolute bottom-[15vh] left-[9vw] z-20 hidden max-w-[430px] sm:block lg:max-w-[500px]"
+            style={{ y: summaryY, scale: summaryScale, willChange: 'transform' }}
+            className="absolute bottom-[15vh] left-[9vw] z-20 hidden max-w-[430px] origin-bottom sm:block lg:max-w-[500px]"
           >
             <div className="box bg-white p-5 lg:p-7">
               <p className="text-[18px] leading-snug font-semibold lg:text-[21px]">
