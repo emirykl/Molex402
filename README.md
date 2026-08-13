@@ -16,7 +16,12 @@ to exactly one verified service effect.
 [RFP Track](https://stellar.gitbook.io/scf-handbook/scf-awards/build-award/rfp-track) request for an
 *x402 Facilitator with Bazaar discovery support*.
 
-Site: **https://emirykl.github.io/Molex402**
+Site: **https://molex402.vercel.app**
+
+**[Read the full technical plan](TECHNICAL-PLAN.md).** It carries the normative RFP compliance
+matrix, the architecture, the wire contract for every endpoint, the `upto` contract interface and
+trust model, the threat table with the control and test covering each entry, the conformance and
+acceptance criteria, the delivery schedule and the definition of done.
 
 ## What it ships
 
