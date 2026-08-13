@@ -1,5 +1,5 @@
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'motion/react'
+import { useRef, useState } from 'react'
+import { motion, useScroll, useTransform, useMotionValueEvent } from 'motion/react'
 import mole from '../assets/molex402-mole.webp'
 
 const REPO = 'https://github.com/emirykl/Molex402'
@@ -28,9 +28,12 @@ export default function HeroIntro() {
   const moleScale = useTransform(scrollYProgress, [0.34, 0.92], [0.86, 1])
   // the bar underneath arrives just before the mole breaks ground
   const barY = useTransform(scrollYProgress, [0.3, 0.44], ['110%', '0%'])
-  // the one line summary lands alongside the mole
-  const blurbOpacity = useTransform(scrollYProgress, [0.46, 0.6], [0, 1])
-  const blurbY = useTransform(scrollYProgress, [0.46, 0.66], ['30%', '0%'])
+  // The summary is latched rather than scroll linked. It surfaces with the
+  // mole and then stays put, instead of fading back out on the way past.
+  const [summaryOut, setSummaryOut] = useState(false)
+  useMotionValueEvent(scrollYProgress, 'change', (v) => {
+    if (v >= 0.52) setSummaryOut(true)
+  })
 
   return (
     <section ref={ref} className="track-hero relative">
@@ -71,16 +74,16 @@ export default function HeroIntro() {
             </span>
           </motion.div>
 
-          {/* one line summary, sitting to the left of the mole */}
+          {/* summary, surfacing next to the mole and staying there */}
           <motion.div
-            style={{ opacity: blurbOpacity, y: blurbY, willChange: 'transform, opacity' }}
-            className="absolute bottom-[5vh] left-[4vw] z-20 hidden max-w-[400px] sm:block lg:max-w-[460px]"
+            initial={false}
+            animate={summaryOut ? { opacity: 1, y: 0 } : { opacity: 0, y: 34 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            style={{ willChange: 'transform, opacity' }}
+            className="absolute bottom-[5vh] left-[4vw] z-20 hidden max-w-[430px] sm:block lg:max-w-[500px]"
           >
-            <div className="box bg-white p-5 lg:p-6">
-              <span className="font-mono text-[11.5px] font-bold tracking-[0.16em]">
-                WHAT IS MOLEX402
-              </span>
-              <p className="mt-3 text-[16px] leading-snug font-semibold lg:text-[18px]">
+            <div className="box bg-white p-5 lg:p-7">
+              <p className="text-[18px] leading-snug font-semibold lg:text-[21px]">
                 An open source x402 facilitator and Bazaar for Stellar. Agents discover paid
                 services, pay in USDC, and prove they got what they paid for.
               </p>
