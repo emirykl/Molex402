@@ -9,6 +9,7 @@ import HeroIntro from './sections/HeroIntro'
 const REPO = 'https://github.com/emirykl/Molex402'
 const BEAVER = 'https://github.com/emirykl/Beaver402'
 const RFP = 'https://stellar.gitbook.io/scf-handbook/scf-awards/build-award/rfp-track'
+const PLAN = 'https://github.com/emirykl/Molex402/blob/main/TECHNICAL-PLAN.md'
 const CONTRACT =
   'https://stellar.expert/explorer/testnet/contract/CBPE37HQ6CHIKB7F3OFU2BIDAQOLB3QZD2DAO5Y6F6DKUSHLW2JZTX2S'
 const TX1 =
@@ -116,6 +117,39 @@ export default function App() {
                 </div>
               </AnimatedContent>
             ))}
+          </div>
+        </section>
+
+        {/* ============================================== status */}
+        <section className="border-b-[3px] border-black bg-acid px-4 py-10 sm:px-6 sm:py-12">
+          <div className="mx-auto max-w-[1240px]">
+            <Reveal>
+              <div className="box bg-white p-6 sm:p-8">
+                <span className="font-mono text-[11.5px] font-bold tracking-[0.16em]">
+                  STATUS
+                </span>
+                <p className="mt-3 max-w-[68ch] text-[15.5px] leading-relaxed sm:text-[17px]">
+                  Molex402 is in active development and is not a running service yet. The
+                  architecture and the full technical plan are complete and public, and the six
+                  parts described below are the scope of this SCF #45 build. Everything on this
+                  page is what we are building against, not what is live today.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-3">
+                  <a
+                    href={PLAN}
+                    className="box shove font-display bg-black px-5 py-2.5 text-[13px] text-white sm:text-[14px]"
+                  >
+                    READ THE TECHNICAL PLAN
+                  </a>
+                  <a
+                    href={REPO}
+                    className="box shove font-display bg-acid px-5 py-2.5 text-[13px] sm:text-[14px]"
+                  >
+                    REPOSITORY
+                  </a>
+                </div>
+              </div>
+            </Reveal>
           </div>
         </section>
 
@@ -243,7 +277,7 @@ export default function App() {
                   account owner approved. Beaver402 closes that with two signatures. The merchant
                   signs a description of the paid request, the buyer rebuilds the same description
                   from what was actually sent, and a Soroban smart account settles only when every
-                  field agrees.
+                  security critical field agrees.
                 </p>
 
                 {/* stacks on phones so the hashes never need a sideways scroll */}

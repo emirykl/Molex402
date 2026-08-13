@@ -24,7 +24,7 @@ const PARTS: Part[] = [
   {
     n: '03',
     name: 'MolexGuard',
-    body: 'Middleware for the seller. It keeps the paid handler locked until settlement is final, then lets it run exactly once. A thousand parallel retries of the same payment still buy one delivery.',
+    body: 'Middleware for the seller. It keeps the paid handler locked until settlement is final, then lets it run once. Under the strict transactional profile, a thousand parallel retries of the same payment still buy one delivery.',
     bullets: ['Durable state machine', 'One payment, one delivery', 'Survives a crash'],
   },
   {
