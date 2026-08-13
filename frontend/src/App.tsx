@@ -80,6 +80,44 @@ export default function App() {
       <div className="min-h-screen">
         <HeroIntro />
 
+        {/* ============================================== intro band */}
+        <section className="border-b-[3px] border-black bg-black px-4 py-16 sm:px-6 sm:py-20">
+          <div className="mx-auto grid max-w-[1240px] gap-6 sm:grid-cols-3 sm:gap-8">
+            {[
+              {
+                k: 'WHAT IT IS',
+                t: 'An open source x402 facilitator and Bazaar for Stellar.',
+                fill: 'bg-acid',
+                rot: -2.4,
+              },
+              {
+                k: 'WHAT IT DOES',
+                t: 'Agents find paid HTTP and MCP services, pay in USDC, and check the response against the payment.',
+                fill: 'bg-white',
+                rot: 1.8,
+              },
+              {
+                k: 'WHERE IT RUNS',
+                t: 'Stellar testnet and pubnet. Apache 2.0, built for SCF #45.',
+                fill: 'bg-white',
+                rot: -1.4,
+              },
+            ].map((c, i) => (
+              <AnimatedContent key={c.k} distance={40} duration={0.6} delay={i * 0.09}>
+                <div
+                  className={`box h-full p-6 sm:p-8 ${c.fill}`}
+                  style={{ transform: `rotate(${c.rot}deg)` }}
+                >
+                  <span className="font-mono text-[12px] font-bold tracking-[0.16em]">{c.k}</span>
+                  <p className="mt-3 text-[17px] leading-tight font-semibold sm:text-[21px]">
+                    {c.t}
+                  </p>
+                </div>
+              </AnimatedContent>
+            ))}
+          </div>
+        </section>
+
         {/* ============================================== the gap */}
         <section id="gap" className="border-y-[3px] border-black bg-white px-4 py-20 sm:px-6 sm:py-28">
           <div className="mx-auto max-w-6xl">
