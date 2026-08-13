@@ -88,7 +88,7 @@ export default function App() {
         <HeroIntro />
 
         {/* ============================================== intro band */}
-        <section className="border-b-[3px] border-black bg-black px-4 py-16 sm:px-6 sm:py-20">
+        <section className="border-b-[3px] border-black bg-black px-4 py-12 sm:px-6 sm:py-20">
           <div className="mx-auto grid max-w-[1240px] gap-6 sm:grid-cols-3 sm:gap-8">
             {[
               {
@@ -126,7 +126,7 @@ export default function App() {
         </section>
 
         {/* ============================================== the gap */}
-        <section id="gap" className="border-y-[3px] border-black bg-white px-4 py-20 sm:px-6 sm:py-28">
+        <section id="gap" className="border-y-[3px] border-black bg-white px-4 py-14 sm:px-6 sm:py-28">
           <div className="mx-auto max-w-6xl">
             <Head
               kicker="The problem"
@@ -159,14 +159,14 @@ export default function App() {
         <StickyParts />
 
         {/* ============================================== how */}
-        <section id="how" className="border-b-[3px] border-black bg-white px-4 py-20 sm:px-6 sm:py-28">
+        <section id="how" className="border-b-[3px] border-black bg-white px-4 py-14 sm:px-6 sm:py-28">
           <div className="mx-auto max-w-6xl">
             <Head
               kicker="The flow"
               title="Seven steps from search to receipt."
               lede="The agent never has to trust the listing. It reads the security profile before it pays, and checks the response against the payment after."
             />
-            <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-4 lg:grid-cols-7">
+            <div className="mt-12 grid grid-cols-2 gap-3 sm:mt-14 sm:grid-cols-4 sm:gap-4 lg:grid-cols-7">
               {[
                 ['DISCOVER', 'Search the Bazaar'],
                 ['BIND', 'Signed offer'],
@@ -176,8 +176,14 @@ export default function App() {
                 ['EXECUTE', 'Run it once'],
                 ['PROVE', 'Signed evidence'],
               ].map(([t, d], i) => (
-                <AnimatedContent key={t} distance={26} duration={0.45} delay={i * 0.05}>
-                  <div className={`box h-full p-4 ${i % 2 ? 'bg-white' : 'bg-acid'}`}>
+                <AnimatedContent
+                  key={t}
+                  distance={26}
+                  duration={0.45}
+                  delay={i * 0.05}
+                  className={i === 6 ? 'col-span-2 sm:col-span-1' : undefined}
+                >
+                  <div className={`box h-full p-3.5 sm:p-4 ${i % 2 ? 'bg-white' : 'bg-acid'}`}>
                     <span className="font-mono text-[11px] font-bold">
                       {String(i + 1).padStart(2, '0')}
                     </span>
@@ -191,7 +197,7 @@ export default function App() {
         </section>
 
         {/* ============================================== proof */}
-        <section id="proof" className="relative overflow-hidden border-b-[3px] border-black bg-acid px-4 py-20 sm:px-6 sm:py-28">
+        <section id="proof" className="relative overflow-hidden border-b-[3px] border-black bg-acid px-4 py-14 sm:px-6 sm:py-28">
           <div className="pointer-events-none absolute inset-0 flex items-end justify-end">
             <span className="giant -mr-[4vw] -mb-[3vw] text-[26vw] text-black/10">PROOF</span>
           </div>
@@ -211,8 +217,8 @@ export default function App() {
                 ['', 3, 'Transactions you can open'],
               ].map(([pre, val, label], i) => (
                 <AnimatedContent key={label as string} distance={30} duration={0.55} delay={i * 0.07}>
-                  <div className="box h-full bg-white p-5 sm:p-6">
-                    <div className="font-display flex items-baseline text-[40px] leading-none sm:text-[52px]">
+                  <div className="box h-full bg-white p-4 sm:p-6">
+                    <div className="font-display flex items-baseline text-[32px] leading-none sm:text-[46px] lg:text-[52px]">
                       <span>{pre as string}</span>
                       <CountUp to={val as number} duration={1.5} separator="," />
                     </div>
@@ -223,9 +229,9 @@ export default function App() {
             </div>
 
             <AnimatedContent distance={36} duration={0.65}>
-              <div className="box mt-8 bg-white p-6 sm:p-10">
-                <h3 className="tight text-[26px]">Beaver402</h3>
-                <p className="mt-4 max-w-[64ch] text-[15.5px] leading-relaxed text-black/72">
+              <div className="box mt-8 bg-white p-5 sm:p-10">
+                <h3 className="tight text-[24px] sm:text-[28px]">Beaver402</h3>
+                <p className="mt-4 max-w-[64ch] text-[14.5px] leading-relaxed text-black/72 sm:text-[15.5px]">
                   An agent can make a payment that is perfectly valid and still not the one the
                   account owner approved. Beaver402 closes that with two signatures. The merchant
                   signs a description of the paid request, the buyer rebuilds the same description
@@ -233,52 +239,52 @@ export default function App() {
                   field agrees.
                 </p>
 
-                <div className="mt-8 overflow-x-auto">
-                  <table className="w-full min-w-[500px] text-left text-[14.5px]">
-                    <tbody>
-                      {[
-                        ['Source, threat model, test vectors', 'github.com/emirykl/Beaver402', BEAVER],
-                        ['Deployed Soroban contract', 'CBPE37HQ…JZTX2S', CONTRACT],
-                        ['A payment both sides agreed on', '19d9c4e4…', TX1],
-                        ['An owner action signed by passkey', '61e6485c…', TX2],
-                      ].map(([what, label, href]) => (
-                        <tr key={label} className="border-b-2 border-black/15 last:border-0">
-                          <td className="py-3.5 pr-6 font-semibold">{what}</td>
-                          <td className="py-3.5">
-                            <a
-                              href={href}
-                              className="box-thin bg-acid px-2 py-1 font-mono text-[12.5px] font-bold hover:bg-black hover:text-acid"
-                            >
-                              {label}
-                            </a>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                {/* stacks on phones so the hashes never need a sideways scroll */}
+                <dl className="mt-7 sm:mt-8">
+                  {[
+                    ['Source, threat model, test vectors', 'github.com/emirykl/Beaver402', BEAVER],
+                    ['Deployed Soroban contract', 'CBPE37HQ…JZTX2S', CONTRACT],
+                    ['A payment both sides agreed on', '19d9c4e4…', TX1],
+                    ['An owner action signed by passkey', '61e6485c…', TX2],
+                  ].map(([what, label, href]) => (
+                    <div
+                      key={label}
+                      className="flex flex-col gap-2 border-b-2 border-black/15 py-3.5 last:border-0 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
+                    >
+                      <dt className="text-[14px] font-semibold sm:text-[14.5px]">{what}</dt>
+                      <dd className="min-w-0">
+                        <a
+                          href={href}
+                          className="box-thin inline-block max-w-full truncate bg-acid px-2 py-1 font-mono text-[12px] font-bold hover:bg-black hover:text-acid sm:text-[12.5px]"
+                        >
+                          {label}
+                        </a>
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
               </div>
             </AnimatedContent>
           </div>
         </section>
 
         {/* ============================================== footer */}
-        <footer className="relative overflow-hidden bg-black px-4 py-20 sm:px-6">
+        <footer className="relative overflow-hidden bg-black px-4 py-16 sm:px-6 sm:py-20">
           <div className="pointer-events-none absolute inset-0 flex items-center">
             <span className="giant -ml-[3vw] text-[24vw] text-white/8">402</span>
           </div>
           <div className="relative mx-auto max-w-6xl">
-            <h2 className="tight max-w-[18ch] text-[34px] text-white sm:text-[56px]">
+            <h2 className="tight max-w-[18ch] text-[30px] text-white sm:text-[48px] lg:text-[56px]">
               Built in the open, from the first commit.
             </h2>
             <div className="mt-10 flex flex-wrap gap-3">
-              <a href={REPO} className="box shove bg-acid px-6 py-3 font-display text-[15px]">
+              <a href={REPO} className="box shove bg-acid px-5 py-2.5 font-display text-[13px] sm:px-6 sm:py-3 sm:text-[15px]">
                 MOLEX402
               </a>
-              <a href={BEAVER} className="box shove bg-white px-6 py-3 font-display text-[15px]">
+              <a href={BEAVER} className="box shove bg-white px-5 py-2.5 font-display text-[13px] sm:px-6 sm:py-3 sm:text-[15px]">
                 BEAVER402
               </a>
-              <a href={RFP} className="box shove bg-white px-6 py-3 font-display text-[15px]">
+              <a href={RFP} className="box shove bg-white px-5 py-2.5 font-display text-[13px] sm:px-6 sm:py-3 sm:text-[15px]">
                 THE RFP
               </a>
             </div>

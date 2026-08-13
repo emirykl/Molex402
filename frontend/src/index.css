@@ -89,4 +89,20 @@
     line-height: 0.94;
     letter-spacing: -0.02em;
   }
+
+  /* Mobile browser chrome makes 100vh taller than the visible viewport, which
+     pushes sticky stages under the address bar. dvh tracks the real height;
+     the vh line stays as a fallback for anything that does not support it. */
+  .h-stage {
+    height: 100vh;
+    height: 100dvh;
+  }
+  .track-hero {
+    height: 240vh;
+    height: 240dvh;
+  }
+  .track-parts {
+    height: 468vh;
+    height: 468dvh;
+  }
 }
