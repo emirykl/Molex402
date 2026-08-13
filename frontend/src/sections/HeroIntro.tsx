@@ -80,7 +80,7 @@ export default function HeroIntro() {
             animate={summaryOut ? { opacity: 1, y: 0 } : { opacity: 0, y: 34 }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             style={{ willChange: 'transform, opacity' }}
-            className="absolute bottom-[5vh] left-[4vw] z-20 hidden max-w-[430px] sm:block lg:max-w-[500px]"
+            className="absolute bottom-[15vh] left-[9vw] z-20 hidden max-w-[430px] sm:block lg:max-w-[500px]"
           >
             <div className="box bg-white p-5 lg:p-7">
               <p className="text-[18px] leading-snug font-semibold lg:text-[21px]">

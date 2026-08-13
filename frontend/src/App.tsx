@@ -1,3 +1,4 @@
+import { motion } from 'motion/react'
 import SplitText from './bits/SplitText'
 import CountUp from './bits/CountUp'
 import ClickSpark from './bits/ClickSpark'
@@ -16,6 +17,29 @@ const TX2 =
   'https://stellar.expert/explorer/testnet/tx/61e6485c8ef7df96b92ada8c79687acc69d8ea1b5d307d952d9b9efcab259b48'
 
 /* ---------------------------------------------------------------- pieces */
+
+/** Plays once, the first time the block is scrolled into view. */
+function Reveal({
+  children,
+  delay = 0,
+  className,
+}: {
+  children: React.ReactNode
+  delay?: number
+  className?: string
+}) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 44 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.25 }}
+      transition={{ duration: 0.75, delay, ease: [0.22, 1, 0.36, 1] }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
 function Head({ kicker, title, lede }: { kicker: string; title: string; lede?: string }) {
   return (
@@ -45,36 +69,6 @@ function Head({ kicker, title, lede }: { kicker: string; title: string; lede?: s
       {lede && (
         <p className="mt-6 max-w-[56ch] text-[16.5px] leading-relaxed text-black/70">{lede}</p>
       )}
-    </AnimatedContent>
-  )
-}
-
-function Panel({
-  n,
-  title,
-  body,
-  fill,
-  delay = 0,
-}: {
-  n: string
-  title: string
-  body: string
-  fill?: boolean
-  delay?: number
-}) {
-  return (
-    <AnimatedContent distance={30} duration={0.55} delay={delay} threshold={0.1}>
-      <div className={`box h-full p-6 ${fill ? 'bg-acid' : 'bg-white'}`}>
-        <span
-          className={`box-thin mb-5 inline-block px-2 py-0.5 font-mono text-[12px] font-bold ${
-            fill ? 'bg-white' : 'bg-acid'
-          }`}
-        >
-          {n}
-        </span>
-        <h3 className="tight text-[21px]">{title}</h3>
-        <p className="mt-3 text-[14.5px] leading-relaxed text-black/72">{body}</p>
-      </div>
     </AnimatedContent>
   )
 }
@@ -126,32 +120,45 @@ export default function App() {
         </section>
 
         {/* ============================================== the gap */}
-        <section id="gap" className="border-y-[3px] border-black bg-white px-4 py-14 sm:px-6 sm:py-28">
+        <section id="gap" className="border-y-[3px] border-black bg-white px-4 py-16 sm:px-6 sm:py-28">
           <div className="mx-auto max-w-6xl">
-            <Head
-              kicker="The problem"
-              title="Stellar can settle a payment. It cannot find one."
-              lede="Paying an API on Stellar already works today. What is missing sits on either side of that payment: finding the service before, and trusting the delivery after."
-            />
+            <Reveal>
+              <span className="box inline-block bg-acid px-3 py-1.5 font-mono text-[12px] font-bold tracking-[0.14em] uppercase">
+                The problem
+              </span>
+            </Reveal>
+
+            <Reveal delay={0.12}>
+              <h2 className="mt-6 max-w-[20ch] text-[36px] leading-[1.02] tracking-[-0.02em] sm:text-[56px]">
+                Stellar can settle a payment. It cannot find one.
+              </h2>
+            </Reveal>
+
             <div className="mt-14 grid gap-6 md:grid-cols-3">
-              <Panel
-                n="01"
-                fill
-                title="Nothing to search"
-                body="There is no catalog. An agent cannot reach a paid service unless a person wired that exact endpoint in beforehand, which defeats the point of an agent."
-              />
-              <Panel
-                n="02"
-                delay={0.08}
-                title="Listings are just claims"
-                body="Catalogs rank on what sellers write about themselves. A price tells an agent nothing about how that endpoint behaves under a retry storm or a replayed payment."
-              />
-              <Panel
-                n="03"
-                delay={0.16}
-                title="Paid is not delivered"
-                body="A settled payment proves money moved. It does not prove the work ran, ran once, or ran for your request. Races and retries can pay twice or deliver twice."
-              />
+              {[
+                [
+                  'Nothing to search',
+                  'There is no catalog, so an agent can only reach endpoints a human wired in first.',
+                  true,
+                ],
+                [
+                  'Listings are just claims',
+                  'Catalogs rank on what sellers say about themselves, not on how the endpoint behaves.',
+                  false,
+                ],
+                [
+                  'Paid is not delivered',
+                  'A settled payment proves money moved, not that the work ran, or ran only once.',
+                  false,
+                ],
+              ].map(([title, body, fill], i) => (
+                <Reveal key={title as string} delay={0.24 + i * 0.14}>
+                  <div className={`box h-full p-6 sm:p-7 ${fill ? 'bg-acid' : 'bg-white'}`}>
+                    <h3 className="tight text-[21px]">{title as string}</h3>
+                    <p className="mt-3 text-[15px] leading-relaxed text-black/72">{body as string}</p>
+                  </div>
+                </Reveal>
+              ))}
             </div>
           </div>
         </section>
