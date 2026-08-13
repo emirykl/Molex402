@@ -20,21 +20,28 @@ const TX2 =
 function Head({ kicker, title, lede }: { kicker: string; title: string; lede?: string }) {
   return (
     <AnimatedContent distance={36} duration={0.6} threshold={0.15}>
-      <div className="box inline-block bg-acid px-3 py-1.5">
-        <span className="font-mono text-[12px] font-bold tracking-[0.14em] uppercase">{kicker}</span>
+      <div>
+        <span className="box inline-block bg-acid px-3 py-1.5 font-mono text-[12px] font-bold tracking-[0.14em] uppercase">
+          {kicker}
+        </span>
       </div>
-      <SplitText
-        tag="h2"
-        text={title}
-        className="tight mt-5 block max-w-[16ch] text-[38px] sm:text-[58px]"
-        splitType="words"
-        delay={32}
-        duration={0.55}
-        ease="power4.out"
-        from={{ opacity: 0, y: 28 }}
-        to={{ opacity: 1, y: 0 }}
-        threshold={0.15}
-      />
+      {/* SplitText renders inline-block and centres by default, so it needs its
+          own block wrapper and an explicit left alignment */}
+      <div className="mt-6">
+        <SplitText
+          tag="h2"
+          text={title}
+          textAlign="left"
+          className="max-w-[22ch] pb-1 text-[36px] leading-[1.02] tracking-[-0.02em] sm:text-[54px]"
+          splitType="words"
+          delay={32}
+          duration={0.55}
+          ease="power4.out"
+          from={{ opacity: 0, y: 28 }}
+          to={{ opacity: 1, y: 0 }}
+          threshold={0.15}
+        />
+      </div>
       {lede && (
         <p className="mt-6 max-w-[56ch] text-[16.5px] leading-relaxed text-black/70">{lede}</p>
       )}
